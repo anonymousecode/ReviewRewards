@@ -16,6 +16,7 @@ create table public.profiles (
   role text not null default 'employee' check (role in ('admin', 'employee')),
   total_points integer not null default 0,
   is_active boolean not null default true,
+  is_deleted boolean not null default false,
   created_at timestamptz not null default now()
 );
 

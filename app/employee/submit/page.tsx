@@ -79,22 +79,22 @@ export default function SubmitReviewPage() {
     }
 
     return (
-        <div className="space-y-8 max-w-2xl">
+        <div className="space-y-8">
             <div>
-                <h1 className="text-2xl font-bold text-zinc-100">Submit Google Review</h1>
-                <p className="text-zinc-400 text-sm mt-1">Share the review link and screenshot proof</p>
+                <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">Submit Google Review</h1>
+                <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-1">Share the review link and screenshot proof</p>
             </div>
 
             {/* Form */}
             <form onSubmit={submit} className="glass-card rounded-2xl p-6 space-y-5">
                 {error && (
-                    <div className="flex items-center gap-3 bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-red-400 text-sm">
+                    <div className="flex items-center gap-3 bg-red-500/10 border border-red-500/30 rounded-xl px-4 py-3 text-red-600 dark:text-red-400 text-sm">
                         <AlertCircle className="w-4 h-4 flex-shrink-0" />
                         <span>{error}</span>
                     </div>
                 )}
                 {success && (
-                    <div className="flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl px-4 py-3 text-emerald-400 text-sm">
+                    <div className="flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl px-4 py-3 text-emerald-600 dark:text-emerald-400 text-sm">
                         <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
                         <span>{success}</span>
                     </div>
@@ -102,9 +102,9 @@ export default function SubmitReviewPage() {
 
                 {/* Review Link */}
                 <div>
-                    <label className="block text-sm font-medium text-zinc-300 mb-1.5">Google Review Link</label>
+                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">Google Review Link</label>
                     <div className="relative">
-                        <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+                        <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
                         <input
                             id="review-link"
                             type="url"
@@ -112,26 +112,26 @@ export default function SubmitReviewPage() {
                             value={form.link}
                             onChange={e => setForm({ link: e.target.value })}
                             placeholder="https://maps.google.com/..."
-                            className="w-full bg-zinc-900/80 border border-zinc-700 rounded-xl pl-10 pr-4 py-3 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm transition-colors"
+                            className="w-full bg-white dark:bg-zinc-900/80 border border-zinc-300 dark:border-zinc-700 rounded-xl pl-10 pr-4 py-3 text-zinc-900 dark:text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-sm transition-colors"
                         />
                     </div>
                 </div>
 
                 {/* Screenshot Upload */}
                 <div>
-                    <label className="block text-sm font-medium text-zinc-300 mb-1.5">Screenshot Proof</label>
+                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">Screenshot Proof</label>
                     <div
                         onClick={() => fileRef.current?.click()}
                         className={`relative flex flex-col items-center justify-center gap-3 border-2 border-dashed rounded-xl p-8 cursor-pointer transition-all
-              ${file ? 'border-indigo-500/60 bg-indigo-500/5' : 'border-zinc-700 hover:border-zinc-500 hover:bg-zinc-900/40'}`}
+              ${file ? 'border-indigo-500/60 bg-indigo-500/5' : 'border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-900/40'}`}
                     >
                         {file ? (
                             <>
                                 <div className="flex items-center gap-3">
-                                    <FileImage className="w-6 h-6 text-indigo-400" />
-                                    <span className="text-sm font-medium text-zinc-200">{file.name}</span>
+                                    <FileImage className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                                    <span className="text-sm font-medium text-zinc-900 dark:text-zinc-200">{file.name}</span>
                                     <button type="button" onClick={e => { e.stopPropagation(); setFile(null); if (fileRef.current) fileRef.current.value = '' }}
-                                        className="text-zinc-500 hover:text-red-400 transition-colors">
+                                        className="text-zinc-500 hover:text-red-500 transition-colors">
                                         <X className="w-4 h-4" />
                                     </button>
                                 </div>
@@ -139,9 +139,9 @@ export default function SubmitReviewPage() {
                             </>
                         ) : (
                             <>
-                                <Upload className="w-8 h-8 text-zinc-500" />
+                                <Upload className="w-8 h-8 text-zinc-400" />
                                 <div className="text-center">
-                                    <p className="text-sm font-medium text-zinc-300">Click to upload screenshot</p>
+                                    <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Click to upload screenshot</p>
                                     <p className="text-xs text-zinc-500 mt-1">PNG, JPG, WEBP — max 5MB</p>
                                 </div>
                             </>
@@ -169,27 +169,27 @@ export default function SubmitReviewPage() {
 
             {/* My Submissions */}
             <div className="glass-card rounded-2xl p-6">
-                <h2 className="text-base font-semibold text-zinc-200 mb-4">My Submissions</h2>
+                <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-200 mb-4">My Submissions</h2>
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead>
-                            <tr className="text-zinc-500 border-b border-zinc-800">
+                            <tr className="text-zinc-500 border-b border-zinc-200 dark:border-zinc-800">
                                 <th className="text-left py-2 pr-4 font-medium">Date</th>
                                 <th className="text-left py-2 pr-4 font-medium">Status</th>
                                 <th className="text-left py-2 pr-4 font-medium">Points</th>
                                 <th className="text-left py-2 font-medium">Note</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-zinc-800/50">
+                        <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                             {loading && <tr><td colSpan={4} className="py-8 text-center"><Loader2 className="w-5 h-5 animate-spin text-indigo-400 mx-auto" /></td></tr>}
                             {!loading && reviews.length === 0 && (
-                                <tr><td colSpan={4} className="py-8 text-center text-zinc-500">No submissions yet.</td></tr>
+                                <tr><td colSpan={4} className="py-8 text-center text-zinc-400">No submissions yet.</td></tr>
                             )}
                             {reviews.map(r => (
-                                <tr key={r.id} className="hover:bg-zinc-900/40 transition-colors">
-                                    <td className="py-3 pr-4 text-zinc-400">{new Date(r.created_at).toLocaleDateString()}</td>
+                                <tr key={r.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-900/40 transition-colors">
+                                    <td className="py-3 pr-4 text-zinc-500 dark:text-zinc-400">{new Date(r.created_at).toLocaleDateString()}</td>
                                     <td className="py-3 pr-4"><StatusBadge status={r.status} /></td>
-                                    <td className="py-3 pr-4 font-semibold text-indigo-400">
+                                    <td className="py-3 pr-4 font-semibold text-indigo-600 dark:text-indigo-400">
                                         {r.status === 'approved' ? `+${r.points_awarded}` : '—'}
                                     </td>
                                     <td className="py-3 text-zinc-500 text-xs max-w-[150px] truncate">{r.rejection_reason ?? ''}</td>

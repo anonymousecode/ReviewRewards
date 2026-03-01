@@ -13,13 +13,13 @@ export function getStatusColor(status: string) {
     switch (status) {
         case 'approved':
         case 'delivered':
-            return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
+            return 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/30'
         case 'pending':
-            return 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+            return 'bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-500/30'
         case 'rejected':
-            return 'bg-red-500/20 text-red-400 border-red-500/30'
+            return 'bg-red-100 dark:bg-red-500/20 text-red-700 dark:text-red-400 border-red-200 dark:border-red-500/30'
         default:
-            return 'bg-zinc-500/20 text-zinc-400 border-zinc-500/30'
+            return 'bg-zinc-200 dark:bg-zinc-500/20 text-zinc-600 dark:text-zinc-400 border-zinc-300 dark:border-zinc-500/30'
     }
 }
 

@@ -1,8 +1,27 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #020817;
-  --foreground: #f1f5f9;
+  --background: #e4e4e7;
+  /* bg-zinc-200 */
+  --foreground: #09090b;
+  /* text-zinc-950 */
+  --card-bg: rgba(255, 255, 255, 0.75);
+  --sidebar-bg: #f4f4f5;
+  --border-color: rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  --background: #09090b;
+  /* bg-zinc-950 */
+  --foreground: #f4f4f5;
+  /* text-zinc-100 */
+  --card-bg: #18181b;
+  /* bg-zinc-900 */
+  --sidebar-bg: #09090b;
+  /* bg-zinc-950 */
+  --border-color: rgba(255, 255, 255, 0.06);
 }
 
 * {
@@ -12,6 +31,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 /* Smooth scrolling */
@@ -26,23 +46,23 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 3px;
+  @apply bg-zinc-300 dark:bg-zinc-800 rounded-full border-2 border-transparent bg-clip-padding;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  @apply bg-zinc-400 dark:bg-zinc-700;
 }
 
 /* Glass card */
 .glass-card {
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  background-color: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
 }
 
 /* Gradient text */
@@ -92,9 +112,7 @@ html {
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  @apply bg-zinc-300 dark:bg-zinc-800 animate-pulse rounded-2xl;
 }
 
 /* Status badge pulse for pending */

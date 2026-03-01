@@ -9,6 +9,7 @@ export interface Profile {
     role: Role
     total_points: number
     is_active: boolean
+    is_deleted?: boolean
     created_at: string
 }
 
