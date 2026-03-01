@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { Star, Mail, Lock, AlertCircle, Loader2 } from 'lucide-react'
+import { Mail, Lock, AlertCircle, Loader2 } from 'lucide-react'
+import Image from 'next/image'
 
 export default function LoginPage() {
     const router = useRouter()
@@ -56,8 +57,8 @@ export default function LoginPage() {
             <div className="w-full max-w-md relative z-10">
                 {/* Logo */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 mb-4 shadow-lg shadow-indigo-500/30">
-                        <Star className="w-8 h-8 text-white fill-white" />
+                    <div className="inline-flex items-center justify-center w-24 h-24 mb-4">
+                        <Image src="/logo.png" alt="ReviewRewards Logo" width={96} height={96} className="object-contain drop-shadow-2xl" />
                     </div>
                     <h1 className="text-3xl font-bold gradient-text">ReviewRewards</h1>
                     <p className="text-zinc-400 mt-2 text-sm">Sign in to your account</p>

@@ -5,8 +5,9 @@ import { usePathname, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import {
     LayoutDashboard, Users, FileCheck, Gift, ShoppingBag,
-    Star, LogOut, ChevronRight, Menu, X
+    LogOut, ChevronRight, Menu, X
 } from 'lucide-react'
+import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 
@@ -48,8 +49,8 @@ export function Sidebar({ role, userName, userEmail }: SidebarProps) {
         <>
             {/* Logo */}
             <div className="flex items-center gap-3 px-4 py-6 border-b border-zinc-800">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center shadow-lg shadow-indigo-500/30 flex-shrink-0">
-                    <Star className="w-5 h-5 text-white fill-white" />
+                <div className="w-10 h-10 flex items-center justify-center flex-shrink-0">
+                    <Image src="/logo.png" alt="Logo" width={40} height={40} className="object-contain" />
                 </div>
                 <div>
                     <div className="font-bold text-zinc-100 leading-tight">ReviewRewards</div>
@@ -108,7 +109,7 @@ export function Sidebar({ role, userName, userEmail }: SidebarProps) {
             {/* Mobile top bar */}
             <div className="lg:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-3 bg-zinc-950/90 backdrop-blur border-b border-zinc-800">
                 <div className="flex items-center gap-2">
-                    <Star className="w-5 h-5 text-indigo-400 fill-indigo-400" />
+                    <Image src="/logo.png" alt="Logo" width={24} height={24} className="object-contain" />
                     <span className="font-bold text-zinc-100 text-sm">ReviewRewards</span>
                 </div>
                 <button onClick={() => setOpen(!open)} className="text-zinc-400 hover:text-zinc-200 p-1">
