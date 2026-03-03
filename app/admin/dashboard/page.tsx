@@ -151,15 +151,14 @@ export default function AdminDashboard() {
                                 <XAxis dataKey="month" tick={{ fill: 'currentColor', fontSize: 12 }} className="text-zinc-400 dark:text-zinc-500" axisLine={false} tickLine={false} />
                                 <YAxis tick={{ fill: 'currentColor', fontSize: 12 }} className="text-zinc-400 dark:text-zinc-500" axisLine={false} tickLine={false} />
                                 <Tooltip
-                                    contentStyle={{
+                                      contentStyle={{
                                         backgroundColor: 'var(--background)',
                                         borderColor: 'currentColor',
-                                        borderRadius: '12px',
+                                        color: 'var(--tw-text-zinc-200, #E6E6E6)', // set desired text color using a CSS variable or color value
                                         fontSize: '12px'
-                                    }}
-                                    className="text-zinc-200 dark:text-zinc-800 border-zinc-200 dark:border-zinc-700"
-                                    cursor={{ fill: 'currentColor', opacity: 0.1 }}
-                                />
+                                      }}
+                                      cursor={{ fill: 'currentColor', opacity: 0.1 }}
+                                    />
                                 <Bar dataKey="reviews" fill="url(#barGradient)" radius={[6, 6, 0, 0]} />
                                 <defs>
                                     <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
