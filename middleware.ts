@@ -31,49 +31,69 @@ export async function middleware(request: NextRequest) {
 
     const { pathname } = request.nextUrl
 
+    const redirectWithCookies = (url: string) => {
+        const response = NextResponse.redirect(new URL(url, request.url))
+        supabaseResponse.cookies.getAll().forEach(c => {
+            response.cookies.set(c.name, c.value, {
+                domain: c.domain,
+                expires: c.expires,
+                httpOnly: c.httpOnly,
+                maxAge: c.maxAge,
+                path: c.path,
+                sameSite: c.sameSite,
+                secure: c.secure,
+            })
+        })
+        return response
+    }
+
     // Not logged in → redirect to login (except for login page itself)
     if (!user && !pathname.startsWith('/login')) {
-        return NextResponse.redirect(new URL('/login', request.url))
+        return redirectWithCookies('/login')
+    }
+
+    // If no user is logged in, we only reach here if on the login page (due to check above)
+    if (!user) {
+        return supabaseResponse
+    }
+
+    // Role-based access control and disabled check
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select('role, is_active, is_deleted')
+        .eq('id', user.id)
+        .single()
+
+    const role = profile?.role ?? 'employee'
+
+    // If user is deleted or inactive, block access
+    // Explicitly check for true/false to handle NULLs from manual schema changes
+    if (profile?.is_deleted === true || profile?.is_active === false) {
+        await supabase.auth.signOut()
+        const errorParam = profile?.is_deleted === true ? 'account_deleted' : 'account_disabled'
+        return redirectWithCookies(`/login?error=${errorParam}`)
     }
 
     // Already logged in trying to access login → redirect based on role
-    if (user && pathname === '/login') {
-        const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', user.id)
-            .single()
-
-        const role = profile?.role ?? 'employee'
+    if (pathname === '/login') {
         const destination = role === 'admin' ? '/admin/dashboard' : '/employee/profile'
-        return NextResponse.redirect(new URL(destination, request.url))
+        return redirectWithCookies(destination)
     }
 
-    // Role-based access control
-    if (user) {
-        const { data: profile } = await supabase
-            .from('profiles')
-            .select('role')
-            .eq('id', user.id)
-            .single()
+    // Employee trying to access admin routes
+    if (pathname.startsWith('/admin') && role !== 'admin') {
+        return redirectWithCookies('/employee/profile')
+    }
 
-        const role = profile?.role ?? 'employee'
+    // Admin trying to access employee routes → redirect to admin
+    if (pathname.startsWith('/employee') && role === 'admin') {
+        return redirectWithCookies('/admin/dashboard')
+    }
 
-        // Employee trying to access admin routes
-        if (pathname.startsWith('/admin') && role !== 'admin') {
-            return NextResponse.redirect(new URL('/employee/profile', request.url))
-        }
-
-        // Admin trying to access employee routes → redirect to admin
-        if (pathname.startsWith('/employee') && role === 'admin') {
-            return NextResponse.redirect(new URL('/admin/dashboard', request.url))
-        }
-
-        // Root redirect
-        if (pathname === '/') {
-            const destination = role === 'admin' ? '/admin/dashboard' : '/employee/profile'
-            return NextResponse.redirect(new URL(destination, request.url))
-        }
+    // Root redirect
+    if (pathname === '/') {
+        const destination = role === 'admin' ? '/admin/dashboard' : '/employee/profile'
+        return redirectWithCookies(destination)
     }
 
     return supabaseResponse

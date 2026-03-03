@@ -34,6 +34,7 @@ export default function LeaderboardPage() {
             .select('id, name, total_points')
             .eq('role', 'employee')
             .eq('is_active', true)
+            .eq('is_deleted', false)
 
         // Get approved reviews for this period
         let query = supabase.from('reviews').select('employee_id').eq('status', 'approved')
@@ -68,23 +69,23 @@ export default function LeaderboardPage() {
     useEffect(() => { load(type) }, [type])
 
     return (
-        <div className="space-y-6 max-w-2xl">
+        <div className="space-y-6">
             <div className="flex items-center gap-3">
-                <Trophy className="w-6 h-6 text-amber-400" />
+                <Trophy className="w-6 h-6 text-amber-500 dark:text-amber-400" />
                 <div>
-                    <h1 className="text-2xl font-bold text-zinc-100">Leaderboard</h1>
-                    <p className="text-zinc-400 text-sm">{type === 'monthly' ? getMonthName(new Date()) : 'All Time'}</p>
+                    <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">Leaderboard</h1>
+                    <p className="text-zinc-500 dark:text-zinc-400 text-sm">{type === 'monthly' ? getMonthName(new Date()) : 'All Time'}</p>
                 </div>
             </div>
 
             {/* Toggle */}
-            <div className="flex gap-1 bg-zinc-900 p-1 rounded-xl w-fit">
+            <div className="flex gap-1 bg-zinc-100 dark:bg-zinc-900 p-1 rounded-xl w-fit border border-zinc-200 dark:border-zinc-800">
                 {(['monthly', 'alltime'] as const).map(t => (
                     <button
                         key={t}
                         onClick={() => setType(t)}
                         className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-all
-              ${type === t ? 'bg-indigo-600 text-white shadow' : 'text-zinc-400 hover:text-zinc-200'}`}
+              ${type === t ? 'bg-indigo-600 text-white shadow' : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200'}`}
                     >
                         {t === 'monthly' ? 'Monthly' : 'All Time'}
                     </button>
@@ -100,10 +101,10 @@ export default function LeaderboardPage() {
                             {data[1].name.charAt(0)}
                         </div>
                         <div className="text-center">
-                            <div className="text-xs font-medium text-zinc-300 max-w-[80px] truncate">{data[1].name}</div>
-                            <div className="text-xs text-zinc-500">{type === 'monthly' ? `${data[1].review_count} reviews` : `${data[1].total_points} pts`}</div>
+                            <div className="text-xs font-medium text-zinc-900 dark:text-zinc-200 max-w-[80px] truncate">{data[1].name}</div>
+                            <div className="text-xs text-zinc-500 dark:text-zinc-400">{type === 'monthly' ? `${data[1].review_count} reviews` : `${data[1].total_points} pts`}</div>
                         </div>
-                        <div className="w-20 h-20 bg-zinc-700 rounded-t-xl flex items-end justify-center pb-2">
+                        <div className="w-20 h-20 bg-zinc-200 dark:bg-zinc-800 border-x border-t border-zinc-300 dark:border-zinc-700 rounded-t-xl flex items-end justify-center pb-2">
                             <span className="text-2xl">🥈</span>
                         </div>
                     </div>
@@ -113,8 +114,8 @@ export default function LeaderboardPage() {
                             {data[0].name.charAt(0)}
                         </div>
                         <div className="text-center">
-                            <div className="text-sm font-semibold text-zinc-100 max-w-[100px] truncate">{data[0].name}</div>
-                            <div className="text-xs text-zinc-400">{type === 'monthly' ? `${data[0].review_count} reviews` : `${data[0].total_points} pts`}</div>
+                            <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 max-w-[100px] truncate">{data[0].name}</div>
+                            <div className="text-xs text-zinc-500 dark:text-zinc-400">{type === 'monthly' ? `${data[0].review_count} reviews` : `${data[0].total_points} pts`}</div>
                         </div>
                         <div className="w-20 h-28 bg-gradient-to-b from-amber-500/30 to-amber-600/20 border border-amber-500/30 rounded-t-xl flex items-end justify-center pb-2">
                             <span className="text-2xl">🥇</span>
@@ -126,10 +127,10 @@ export default function LeaderboardPage() {
                             {data[2].name.charAt(0)}
                         </div>
                         <div className="text-center">
-                            <div className="text-xs font-medium text-zinc-300 max-w-[80px] truncate">{data[2].name}</div>
-                            <div className="text-xs text-zinc-500">{type === 'monthly' ? `${data[2].review_count} reviews` : `${data[2].total_points} pts`}</div>
+                            <div className="text-xs font-medium text-zinc-900 dark:text-zinc-200 max-w-[80px] truncate">{data[2].name}</div>
+                            <div className="text-xs text-zinc-500 dark:text-zinc-400">{type === 'monthly' ? `${data[2].review_count} reviews` : `${data[2].total_points} pts`}</div>
                         </div>
-                        <div className="w-20 h-14 bg-zinc-700 rounded-t-xl flex items-end justify-center pb-2">
+                        <div className="w-20 h-14 bg-zinc-200 dark:bg-zinc-800 border-x border-t border-zinc-300 dark:border-zinc-700 rounded-t-xl flex items-end justify-center pb-2">
                             <span className="text-2xl">🥉</span>
                         </div>
                     </div>
@@ -141,7 +142,7 @@ export default function LeaderboardPage() {
                 {loading ? (
                     <div className="py-12 flex justify-center"><Loader2 className="w-6 h-6 animate-spin text-indigo-400" /></div>
                 ) : (
-                    <div className="divide-y divide-zinc-800/50">
+                    <div className="divide-y divide-zinc-200 dark:divide-zinc-800/50">
                         {data.length === 0 && (
                             <div className="py-12 text-center text-zinc-500">No data yet.</div>
                         )}
@@ -149,22 +150,22 @@ export default function LeaderboardPage() {
                             <div
                                 key={entry.id}
                                 className={`flex items-center gap-4 px-5 py-4 transition-colors
-                  ${entry.is_me ? 'bg-indigo-600/10 border-l-2 border-l-indigo-500' : 'hover:bg-zinc-900/40'}`}
+                   ${entry.is_me ? 'bg-indigo-600/10 border-l-2 border-l-indigo-500' : 'hover:bg-zinc-50 dark:hover:bg-zinc-900/40'}`}
                             >
                                 <span className="text-lg w-10 text-center flex-shrink-0">{getRankIcon(idx + 1)}</span>
                                 <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-400 to-violet-500 flex items-center justify-center text-sm font-bold text-white flex-shrink-0">
                                     {entry.name.charAt(0).toUpperCase()}
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                    <div className={`text-sm font-medium truncate ${entry.is_me ? 'text-indigo-300' : 'text-zinc-200'}`}>
-                                        {entry.name} {entry.is_me && <span className="text-xs text-indigo-400 ml-1">(You)</span>}
+                                    <div className={`text-sm font-medium truncate ${entry.is_me ? 'text-indigo-600 dark:text-indigo-300' : 'text-zinc-900 dark:text-zinc-200'}`}>
+                                        {entry.name} {entry.is_me && <span className="text-xs text-indigo-600 dark:text-indigo-400 ml-1">(You)</span>}
                                     </div>
                                     <div className="text-xs text-zinc-500">
                                         {type === 'monthly' ? `${entry.review_count} reviews this month` : `${entry.review_count} reviews total`}
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <div className="font-bold text-indigo-400">
+                                    <div className="font-bold text-indigo-600 dark:text-indigo-400">
                                         {type === 'monthly' ? entry.review_count : entry.total_points}
                                     </div>
                                     <div className="text-xs text-zinc-500">{type === 'monthly' ? 'reviews' : 'pts'}</div>
